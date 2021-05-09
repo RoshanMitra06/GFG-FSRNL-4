@@ -1,2 +1,59 @@
-hi im Roshan
-I am learning about git now
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Promise</title>
+    <style>
+        pre{
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f0f0f0d7;
+          padding: 5px;
+          }
+    </style>
+</head>
+<body>
+    <h1>Testing Github</h1>
+    <form action=""id="myFrm">
+    <input type="text" id="username" />
+    <input type="submit" value="getinfo" />
+    </form>
+    <pre>Type Github Username and hit Enter</pre>
+    <img id="image" />
+    <script>
+        var img=document.querySelector("#image");
+        img.hidden=true;
+        var form=document.querySelector("#myFrm");
+        var pre=document.querySelector("pre");
+        form.onsubmit= function () {
+            var username=document.querySelector("#username");
+            var url="https://api.github.com/users/" + username.value;
+            fetch(url)
+                .then(function(res){
+                        return res.json();
+            })
+            .then(function(json){
+                console.log("Hey im in the json place");
+                console.log(json);
+                var image=json.avatar_url;
+                var name=json.name || json.login;
+                var bio=json.bio || "This person is lazy";  
+                var content="";
+                content+="Name:"+ name+ "\n";
+                content+="Bio:"+ bio;
+                img.src=image;
+                img.hidden=false;
+                pre.innerHTML=content;
+            })
+            .catch(function(err){
+                console.log("Roshan messed it up");
+                console.log(err.message);   
+            });
+            //alert("Hola!");
+            return false;
+        };
+    </script>
+</body>
+</html>
